@@ -14,7 +14,7 @@ class Listener < Redmine::Hook::Listener
     return if issue.is_private?
 
     title = "#{escape issue.project}"
-    text = "#{escape issue.author} #{l(:issue_created)} [#{escape issue}](#{object_url issue}) #{mentions issue.description}"
+    text = "#{escape issue.author} #{l(:issue_created)} [#{escape issue}](#{object_url issue})"
 
     facts = {
       I18n.t("field_status") => escape(issue.status.to_s),
@@ -40,7 +40,7 @@ class Listener < Redmine::Hook::Listener
     return unless url
 
     title = "#{escape issue.project}"
-    text = "#{escape journal.user.to_s} #{l(:issue_updated)} [#{escape issue}](#{object_url issue}) #{mentions journal.notes}"
+    text = "#{escape journal.user.to_s} #{l(:issue_updated)} [#{escape issue}](#{object_url issue})"
 
     sections = journal.notes if journal.notes
     facts = get_facts(journal)
@@ -111,10 +111,6 @@ class Listener < Redmine::Hook::Listener
     url = url_for_project project
 
     title = "#{escape project}"
-
-    if not page.content.comments.empty?
-      text = "#{comment}\n\n#{escape page.content.comments}"
-    end
 
     sections = nil
     facts = nil
